@@ -5,7 +5,7 @@ var oTest = {
         {
             testQuestion: '1. С помощью какого объекта осуществляется доступ к локальному хранилищу в современных браузерах?',
             answerVariant1: 'a. Storage',
-            answerVariant2: 'b. localStorage', //right
+            answerVariant2: 'b. localStorage',
             answerVariant3: 'c. cookies',
             answerVariant4: 'd. LocalStorage'
 
@@ -16,7 +16,7 @@ var oTest = {
             answerVariant1: 'a. saveItem()',
             answerVariant2: 'b. saveToLocalStorage()',
             answerVariant3: 'c. save()',
-            answerVariant4: 'd. setItem()' //right
+            answerVariant4: 'd. setItem()'
 
         },
 
@@ -25,7 +25,7 @@ var oTest = {
             answerVariant1: 'a. Запрещено дублирование полей объектов',
             answerVariant2: 'b. Запрещено удаление полей, имеющих свойство writable = false',
             answerVariant3: 'c. Запрещено дублирование параметров функции',
-            answerVariant4: 'd. Запрещено использование директивы eval' //right
+            answerVariant4: 'd. Запрещено использование директивы eval'
 
         },
 
@@ -33,7 +33,7 @@ var oTest = {
             testQuestion: '4. Для чего используется конструкция try-catch в javascript?',
             answerVariant1: 'a. Для генерирования ошибок.',
             answerVariant2: 'b. В строгом режиме весь код необходимо оборачивать в try-catch.',
-            answerVariant3: 'c. Для обработки возможных ошибок', //right
+            answerVariant3: 'c. Для обработки возможных ошибок',
             answerVariant4: 'd. Для замены условного оператора if'
 
         },
@@ -62,10 +62,7 @@ $(function () {
             var sResult = 'Your result is ' + counter/aCorrectAnswers.length*100 + ' %';
             $('#showTestResult').html(sResult);
             aChosenAnswers = [];
-            // $( "input[type=radio]:checked" ).removeAttr('checked');
         };
-        $( "input[type=radio]:checked" ).removeAttr('checked');
-        console.log(counter);
     };
 
     var $userCard = $(".test")[0];
@@ -78,16 +75,18 @@ $(function () {
                 aChosenAnswers.push($checkedRadioBox[i].value);
             }
             checkAnswers();
-            // $checkedRadioBox.removeAttr('checked');
+            $('#myModal').attr('state', 'test-complete');
         } catch (e) {
             $('#showTestResult').html('<span>Please, choose one answer variant for all questions.</span>');
             aChosenAnswers = [];
         }
-        // checkAnswers();
     });
 
-    $('#myModal').on('hidden.bs.modal', function () {
-        $( "input[type=radio]:checked" ).removeAttr("checked");
+    $('#myModal').on('hide.bs.modal', function () {
+        var sTestState = $(this).attr('state');
+        if (sTestState === 'test-complete') {
+            $( "input[type=radio]:checked" ).prop("checked", false);
+        };
     });
 });
 
